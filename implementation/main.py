@@ -53,17 +53,12 @@ if __name__ == "__main__":
                                 mutation_prob=mut_prob_mel,
                                 std_dev=std_dev_mel)
             gen_count += 1
-            # CANCELLARE I PRINT
-            print("NEW GEN")
-            print(population)
         else:
             # The initial population needs to be created
             population = go.generate_init_pop_value(pop_size = pop_size, 
                                 individual_length = ind_len, 
                                 octv_low = octv_low, 
                                 octv_up = octv_up)
-            print("ORIGINAL POPULATION")
-            print(population)
             not_first_gen = True
 
         # Create the audio files (phenotypes) from the genotypes
@@ -80,16 +75,8 @@ if __name__ == "__main__":
         # Record the fitness vector for statistical analysis
         stat.write_stat_mel(fitness_vector)
 
-    #CANC ??
-    #print("final melody", itf.final_melody)
-
     # Index of the winner melody
     best_melody_indx = itf.final_melody-1
-
-    # CANC??
-    print("BEST MELODY INDEX:", best_melody_indx)
-    print("LAST GEN: \n", population)
-    print("BEST MELODY: \n", population[best_melody_indx])
 
 
     # If the user is willing to perform also the rhythm evolution phase
@@ -108,16 +95,13 @@ if __name__ == "__main__":
                             crossover_prob=cross_prob_rtm,
                             mutation_prob = mut_prob_rtm,
                             std_dev= std_dev_rtm)
-                print("NEXT GEN RHYTHM: \n", population)
             else:
                 # The initial rhythms must be added
-                print("BEST MELODY INDEX AGAIN:", best_melody_indx)
                 population = go.add_rhythm(pop = population,
                             best_melody_indx=best_melody_indx,
                             pop_size=pop_size,
                             std=1)
                 not_first_gen = True
-                print("FIRST POPULATION WITH RHYTHM: \n", population)
 
             # Create the audio files (phenotypes) from the genotypes
             create = go.create_audio(population)
@@ -128,7 +112,6 @@ if __name__ == "__main__":
 
             # Extraction of the user evaluations and update of the fitness vectors
             fitness_vector = itf.fitness_rhythm
-            print(fitness_vector)
             go.vote_population(population=population, fitnesses=fitness_vector)
 
             # Record the fitness vector for statistical analysis
